@@ -1,8 +1,9 @@
-import React, { StrictMode } from "react";
+import React, { StrictMode, useState} from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import Details from "./Details";
 import SearchParams from "./SearchParams";
+import ThemeContext from "./ThemeContext";
 // const App = () => {
 //   return React.createElement("div", {}, [
 //     React.createElement("h1", {}, "Adopt Me!"),
@@ -21,7 +22,10 @@ import SearchParams from "./SearchParams";
 // };
 
 const App = () => {
+  const theme = useState("darkblue");
+ 
   return (
+    <ThemeContext.Provider value={theme}>
     <div>
       <Router>
         <header>
@@ -39,6 +43,7 @@ const App = () => {
         </Switch>
       </Router>
     </div>
+    </ThemeContext.Provider>
   );
 };
 

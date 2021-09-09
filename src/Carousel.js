@@ -8,7 +8,7 @@ export default class Carousel extends Component {
   };
 
   static defaulprops = {
-    images: ["http://pets-image.dev-apis.com/pets/none.jpg"],
+    images: ["https://pets-image.dev-apis.com/pets/none.jpg"],
   };
 
   handleIndexClick= (event) =>{
