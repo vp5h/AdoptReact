@@ -6,7 +6,7 @@
   "scripts": {
     "build:client": "parcel build --public-url ./dist/ src/index.html",
     "build:server": "parcel build -d dist-server --target node server/index.js",
-    "start":"npm -s run build && node dist-server/index.js",
+    "start": "npm -s run build && node dist-server/index.js",
     "build": "npm run build:client && npm run build:server",
     "format": "prettier --write \"src/**/*.{js, jsx}\"",
     "lint": "eslint \"src/**/*.{js, jsx}\" --quiet",
@@ -31,6 +31,7 @@
     "prettier": "^2.3.2"
   },
   "dependencies": {
+    "express": "^4.17.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0"
