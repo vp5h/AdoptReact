@@ -1,21 +1,32 @@
-import { Component } from "react";
+import { Component, FunctionComponent, FunctionComponentElement } from "react";
 // import { useState, Component, useEffect } from "react";
 // import { withRouter, useParams } from "react-router-dom";
-import { withRouter } from "react-router-dom";
+import { withRouter, RouteComponentProps } from "react-router-dom";
 import Carousel from "./Carousel";
 import ThemeContext from "./ThemeContext";
 import Modal from "./Modal";
 import ErrorBoundry from "./ErrorBoundry";
+import { Animal, PetAPIResponse } from "./APIResponseTypes";
 
-class Details extends Component {
-  state = { loading: true, showModal: false };
+class Details extends Component<RouteComponentProps<{ id: string }>> {
+  state = {
+    loading: true,
+    showModal: false,
+    animal: "" as Animal,
+    breed: "",
+    city: "",
+    state: "",
+    description: "",
+    name: "",
+    images: [] as string[],
+  };
 
   async componentDidMount() {
     const res = await fetch(
       // eslint-disable-next-line react/prop-types
       `https://pets-v2.dev-apis.com/pets?id=${this.props.match.params.id}`
     );
-    const json = await res.json();
+    const json = (await res.json()) as PetAPIResponse;
 
     this.setState(
       Object.assign(
@@ -31,7 +42,7 @@ class Details extends Component {
     this.setState({ showModal: !this.state.showModal });
   };
   adopt = () => {
-    window.location = "https://bit.ly/pet-adopt";
+    window.location.href = "https://bit.ly/pet-adopt";
   };
   render() {
     if (this.state.loading) {
@@ -114,12 +125,15 @@ class Details extends Component {
 //   );
 // };
 
+const DetailsErrorBoundary: FunctionComponent =
+  function DetailsWithErrorBound() {
+    return (
+      <ErrorBoundry>
+        <DetailsWithRouter />
+      </ErrorBoundry>
+    );
+  };
+
 const DetailsWithRouter = withRouter(Details);
 
-export default function DetailsWithErrorBound(props) {
-  return (
-    <ErrorBoundry>
-      <DetailsWithRouter {...props} />
-    </ErrorBoundry>
-  );
-}
+export default DetailsErrorBoundary;
