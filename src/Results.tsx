@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
 import { Pet } from "./Pet";
-
-const Result = ({ pets }) => {
+import {Pet as PetType} from "./APIResponseTypes";
+import { FunctionComponent } from "react";
+const Result: FunctionComponent<{ pets: PetType[] }> = ({ pets }) => {
   return (
     <div className="search">
       {!pets.length ? (
@@ -9,10 +10,10 @@ const Result = ({ pets }) => {
       ) : (
         pets.map((pet) => (
           <Pet
-            name={pet.name}
             animal={pet.animal}
-            breed={pet.breed}
             key={pet.id}
+            name={pet.name}
+            breed={pet.breed}
             images={pet.images}
             location={`${pet.city}, ${pet.state}`}
             id={pet.id}

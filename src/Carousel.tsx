@@ -1,8 +1,12 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/prop-types */
-import React, { Component } from "react";
+import React, { Component, MouseEvent, ReactNode } from "react";
 
-export default class Carousel extends Component {
+interface IProps {
+  images: string[];
+}
+
+export default class Carousel extends Component<IProps> {
   state = {
     active: 0,
   };
@@ -11,13 +15,18 @@ export default class Carousel extends Component {
     images: ["https://pets-image.dev-apis.com/pets/none.jpg"],
   };
 
-  handleIndexClick= (event) =>{
-    this.setState({
-      active: +event.target.dataset.index,
-    });
-  }
+  handleIndexClick = (event: MouseEvent<HTMLElement>): void => {
+    if (!(event.target instanceof HTMLElement)) {
+      return;
+    }
 
-  render() {
+    if (event.target.dataset.index) {
+      this.setState({
+        active: +event.target.dataset.index,
+      });
+    }
+  };
+  render(): ReactNode {
     //state are mutable while props flow in one direction
     const { active } = this.state;
 
@@ -33,7 +42,7 @@ export default class Carousel extends Component {
               src={photo}
               data-index={index}
               onClick={this.handleIndexClick}
-              className={index === active ? active : ""}
+              className={index === active ? "active" : ""}
               alt="animal-thubnail"
             />
           ))}

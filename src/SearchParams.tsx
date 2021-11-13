@@ -1,19 +1,21 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, FunctionComponent } from "react";
 import ThemeContext from "./ThemeContext";
 import useBreedlist from "./useBreedList";
 import Result from "./Results";
-const ANIMALS = ["bird", "cat", "dog", "rabbit", "reptile"];
+import { PetAPIResponse, Animal, Pet } from "./APIResponseTypes";
 
-const SearchParams = () => {
+const ANIMALS: Animal[] = ["bird", "cat", "dog", "rabbit", "reptile"];
+
+const SearchParams: FunctionComponent = () => {
   const [location, setLocation] = useState("");
-  const [animal, setAnimal] = useState("");
+  const [animal, setAnimal] = useState("" as Animal);
   const [breed, setBreed] = useState("");
-  const [pets, setPets] = useState([]);
+  const [pets, setPets] = useState([] as Pet[]);
   const [breeds] = useBreedlist(animal);
   const [theme, setTheme] = useContext(ThemeContext);
 
   useEffect(() => {
-    requestPets();
+    void requestPets();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location, animal, breed]);
 
@@ -21,7 +23,7 @@ const SearchParams = () => {
     const res = await fetch(
       `https://pets-v2.dev-apis.com/pets?animal=${animal}&location=${location}&breed=${breed}`
     );
-    const json = await res.json();
+    const json = (await res.json()) as PetAPIResponse;
     console.log(json);
     setPets(json.pets);
   }
@@ -31,7 +33,7 @@ const SearchParams = () => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          requestPets();
+          void requestPets();
         }}
       >
         <label htmlFor="location">
@@ -48,9 +50,9 @@ const SearchParams = () => {
           <select
             id="animal"
             value={animal}
-            onBlur={(e) => setAnimal(e.target.value)}
+            onBlur={(e) => setAnimal(e.target.value as Animal)}
             onChange={(e) => {
-              setAnimal(e.target.value);
+              setAnimal(e.target.value as Animal);
             }}
           >
             <option />
