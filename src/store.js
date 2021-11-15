@@ -1,8 +1,8 @@
 import { createStore } from "redux";
-import combineReducers from "./reducer";
+import reducer from "./reducer";
 
 const store = createStore(
-  combineReducers,
+  reducer,
   typeof window.window.__REDUX_DEVTOOLS_EXTENSION__ !== "undefined"
     ? window.__REDUX_DEVTOOLS_EXTENSION__()
     : (f) => f
