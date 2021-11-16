@@ -48,6 +48,6 @@ test("gives back breeds with an animal", async () => {
   await waitForNextUpdate();
 
   const [breedList, status] = result.current;
-  expect(status).toBe("loaded");
+  expect(status).toBe("Loaded");
   expect(breedList).toEqual(breeds);
 });
